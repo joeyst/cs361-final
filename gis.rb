@@ -59,9 +59,7 @@ class Track
   # it's not the responsibility of `Track` to know how to 
   # create `Coordinate`s from within the segment.coordinates.each loop 
   def get_coordinate_string(s)
-    tsj = '[' 
-    tsj += _get_coordinate_string_no_brackets(s)
-    tsj + ']'
+    "[#{_get_coordinate_string_no_brackets(s)}]"
   end
 
   def _get_coordinate_string_no_brackets(s)
