@@ -13,12 +13,15 @@ class Coordinate
   def to_str
     tsj = '['
     tsj += "#{c.lon},#{c.lat}"
-    if c.ele != nil
-      tsj += ",#{c.ele}"
-    end
+    tsj += _ele
     tsj += ']'
     tsj
   end
+
+  def _ele
+    ele ? ",#{ele}" : ""
+  end
+
 end
 
 class Track
