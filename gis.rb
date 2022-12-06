@@ -142,17 +142,20 @@ end
   def get_json(indent=0)
     # Write stuff
     s = '{"type": "FeatureCollection","features": ['
-    @features.each_with_index do |f,i|
-      if i != 0
-        s +=","
-      end
-      s += f.get_json
-    end
+    s += _get_features
+    # @features.each_with_index do |f,i|
+    #   if i != 0
+    #     s +=","
+    #   end
+    #   s += f.get_json
+    # end
     s + "]}"
   end
 
   def _get_features
-
+    features
+      .map(&:get_json)
+      .join(",")
   end
 end
 
