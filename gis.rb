@@ -144,11 +144,7 @@ end
       if i != 0
         s +=","
       end
-        if f.class == Track
-            s += f.get_json
-        elsif f.class == Waypoint
-            s += f.get_json
-      end
+      s += f.get_json
     end
     s + "]}"
   end
