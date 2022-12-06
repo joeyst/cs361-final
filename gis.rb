@@ -1,5 +1,20 @@
 #!/usr/bin/env ruby
 
+class Coordinate
+  attr_reader :lon, :lat, :ele
+  def initialize(lon, lat, ele=nil)
+    @lon = lon
+    @lat = lat
+    @ele = ele
+  end
+
+  # prints JSON appendable string, as temporary solution to 
+  # JSON construction 
+  def to_str
+
+  end
+end
+
 class Track
   def initialize(segments, name=nil)
     @name = name
