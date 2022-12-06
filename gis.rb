@@ -59,14 +59,13 @@ class Track
   # it's not the responsibility of `Track` to know how to 
   # create `Coordinate`s from within the segment.coordinates.each loop 
   def get_coordinate_string(s)
-    tsj = '['
-    s.coordinates.each do |c|
-      if tsj != '['
-        tsj += ','
-      end
-      tsj += Coordinate.new(c.lon, c.lat, c.ele)
-    end
+    tsj = '[' 
+    tsj += _get_coordinate_string_no_brackets(s)
     tsj + ']'
+  end
+
+  def _get_coordinate_string_no_brackets(s)
+    s.coordinates.join(",")
   end
 
 end
@@ -161,16 +160,16 @@ def main
   w = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
   w2 = Waypoint.new(-121.5, 45.6, nil, "store", "dot")
   ts1 = [
-  Point.new(-122, 45),
-  Point.new(-122, 46),
-  Point.new(-121, 46),
+  Coordinate.new(-122, 45),
+  Coordinate.new(-122, 46),
+  Coordinate.new(-121, 46),
   ]
 
-  ts2 = [ Point.new(-121, 45), Point.new(-121, 46), ]
+  ts2 = [ Coordinate.new(-121, 45), Coordinate.new(-121, 46), ]
 
   ts3 = [
-    Point.new(-121, 45.5),
-    Point.new(-122, 45.5),
+    Coordinate.new(-121, 45.5),
+    Coordinate.new(-122, 45.5),
   ]
 
   t = Track.new([ts1, ts2], "track 1")
