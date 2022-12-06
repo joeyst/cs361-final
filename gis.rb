@@ -11,7 +11,7 @@ class Coordinate
   # creates JSON appendable string, as temporary solution to 
   # JSON construction 
   def to_str
-    "[#{lon},#{lat},#{_ele}]"
+    "[#{lon},#{lat}#{_ele}]"
   end
 
   def _ele
@@ -58,12 +58,13 @@ class Track
           tsj += ','
         end
         # Add the coordinate
-        tsj += '['
-        tsj += "#{c.lon},#{c.lat}"
-        if c.ele != nil
-          tsj += ",#{c.ele}"
-        end
-        tsj += ']'
+        tsj += Coordinate.new(c.lon, c.lat, c.ele)
+        # tsj += '['
+        # tsj += "#{c.lon},#{c.lat}"
+        # if c.ele != nil
+        #   tsj += ",#{c.ele}"
+        # end
+        # tsj += ']'
       end
       j+=tsj
       j+=']'
