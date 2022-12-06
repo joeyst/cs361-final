@@ -48,6 +48,10 @@ class Track
     j + '}}'
   end
 
+  def get_name_string
+    name ? %Q["properties": {"title": "#{name}"},] : ""
+  end
+
   def get_coordinate_arrays
     segments
     .map(&method(:get_coordinate_string))
