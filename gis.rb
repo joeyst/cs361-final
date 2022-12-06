@@ -59,17 +59,36 @@ class Track
         end
         tsj += Coordinate.new(c.lon, c.lat, c.ele)
       end
+      tsj = get_coordinate_string(s)
       j+=tsj
       j+=']'
     end
     j + ']}}'
   end
+
+  # temporary solution to creating array of coordinates. 
+  # should later be extracted into segment class because 
+  # it's not the responsibility of `Track` to know how to 
+  # create `Coordinate`s from within the segment.coordinates.each loop 
+  def get_coordinate_string(s)
+    tsj = ''
+    s.coordinates.each do |c|
+      if tsj != ''
+        tsj += ','
+      end
+      tsj += Coordinate.new(c.lon, c.lat, c.ele)
+    end
+    tsj
+  end
+
 end
 class TrackSegment
   attr_reader :coordinates
   def initialize(coordinates)
     @coordinates = coordinates
   end
+
+
 end
 
 class Point
