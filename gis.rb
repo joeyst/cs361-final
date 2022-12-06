@@ -36,11 +36,7 @@ class Track
   def get_track_json
     j = '{'
     j += '"type": "Feature", '
-    if @name != nil
-      j+= '"properties": {'
-      j += '"title": "' + @name + '"'
-      j += '},'
-    end
+    j += get_name_string
     j += '"geometry": {'
     j += '"type": "MultiLineString",'
 
