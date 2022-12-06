@@ -50,10 +50,8 @@ class Track
       if index > 0
         j += ","
       end
-      j += '['
       tsj = get_coordinate_string(s)
       j+=tsj
-      j+=']'
     end
     j + ']}}'
   end
@@ -63,14 +61,14 @@ class Track
   # it's not the responsibility of `Track` to know how to 
   # create `Coordinate`s from within the segment.coordinates.each loop 
   def get_coordinate_string(s)
-    tsj = ''
+    tsj = '['
     s.coordinates.each do |c|
-      if tsj != ''
+      if tsj != '['
         tsj += ','
       end
       tsj += Coordinate.new(c.lon, c.lat, c.ele)
     end
-    tsj
+    tsj + ']'
   end
 
 end
