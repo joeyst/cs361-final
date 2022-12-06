@@ -2,6 +2,7 @@
 
 class Coordinate
   attr_reader :lon, :lat, :ele
+
   def initialize(lon, lat, ele=nil)
     @lon = lon
     @lat = lat
@@ -17,7 +18,6 @@ class Coordinate
   def _ele
     ele ? ",#{ele}" : ""
   end
-
 end
 
 class Track
@@ -65,19 +65,17 @@ class Track
   def _get_coordinate_string_no_brackets(s)
     s.coordinates.join(",")
   end
-
 end
+
 class TrackSegment
   attr_reader :coordinates
+  
   def initialize(coordinates)
     @coordinates = coordinates
   end
-
-
 end
 
 class Point
-
   attr_reader :lat, :lon, :ele
 
   def initialize(lon, lat, ele=nil)
@@ -88,10 +86,7 @@ class Point
 end
 
 class Waypoint
-
-
-
-attr_reader :lat, :lon, :ele, :name, :type
+  attr_reader :lat, :lon, :ele, :name, :type
 
   def initialize(lon, lat, ele=nil, name=nil, type=nil)
     @lat = lat
@@ -131,10 +126,11 @@ end
 class World
   attr_reader :name, :features
 
-def initialize(name, things)
-  @name = name
-  @features = things
-end
+  def initialize(name, things)
+    @name = name
+    @features = things
+  end
+
   def add_feature(f)
     @features.append(t)
   end
