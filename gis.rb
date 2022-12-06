@@ -57,14 +57,7 @@ class Track
         if tsj != ''
           tsj += ','
         end
-        # Add the coordinate
         tsj += Coordinate.new(c.lon, c.lat, c.ele)
-        # tsj += '['
-        # tsj += "#{c.lon},#{c.lat}"
-        # if c.ele != nil
-        #   tsj += ",#{c.ele}"
-        # end
-        # tsj += ']'
       end
       j+=tsj
       j+=']'
