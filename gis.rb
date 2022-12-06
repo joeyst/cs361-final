@@ -51,14 +51,6 @@ class Track
         j += ","
       end
       j += '['
-      # Loop through all the coordinates in the segment
-      tsj = ''
-      s.coordinates.each do |c|
-        if tsj != ''
-          tsj += ','
-        end
-        tsj += Coordinate.new(c.lon, c.lat, c.ele)
-      end
       tsj = get_coordinate_string(s)
       j+=tsj
       j+=']'
