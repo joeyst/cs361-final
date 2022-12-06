@@ -140,10 +140,11 @@ end
   end
 
   def get_json(indent=0)
+    %Q[{"type": "FeatureCollection","features": [#{_get_features}]}]
     # Write stuff
-    s = '{"type": "FeatureCollection","features": ['
-    s += _get_features
-    s + "]}"
+    # s = '{"type": "FeatureCollection","features": ['
+    # s += _get_features
+    # s + "]}"
   end
 
   def _get_features
