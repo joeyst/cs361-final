@@ -11,7 +11,7 @@ class Track
     @segments = segment_objects
   end
 
-  def get_track_json()
+  def get_track_json
     j = '{'
     j += '"type": "Feature", '
     if @name != nil
@@ -21,6 +21,9 @@ class Track
     end
     j += '"geometry": {'
     j += '"type": "MultiLineString",'
+
+
+    # # # Creates coordinate array 
     j +='"coordinates": ['
     # Loop through all the segment objects
     @segments.each_with_index do |s, index|
@@ -133,7 +136,7 @@ end
   end
 end
 
-def main()
+def main
   w = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
   w2 = Waypoint.new(-121.5, 45.6, nil, "store", "dot")
   ts1 = [
@@ -154,10 +157,10 @@ def main()
 
   world = World.new("My Data", [w, w2, t, t2])
 
-  puts world.to_geojson()
+  puts world.to_geojson
 end
 
 if File.identical?(__FILE__, $0)
-  main()
+  main
 end
 
