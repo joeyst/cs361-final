@@ -73,16 +73,6 @@ class TrackSegment
   end
 end
 
-class Point
-  attr_reader :lat, :lon, :ele
-
-  def initialize(lon, lat, ele=nil)
-    @lon = lon
-    @lat = lat
-    @ele = ele
-  end
-end
-
 class Waypoint
   attr_reader :lat, :lon, :ele, :name, :type
 
