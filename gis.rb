@@ -46,16 +46,11 @@ class Track
 
 
     # # # Creates coordinate array 
-    j +='"coordinates": ['
-    # Loop through all the segment objects
-    j += get_coordinate_arrays
-    # @segments.each_with_index do |s, index|
-    #   if index > 0
-    #     j += ","
-    #   end
-    #   j += get_coordinate_string(s)
-    # end
-    j + ']}}'
+    j += %Q["coordinates": \[#{get_coordinate_arrays}\]]
+    # j +='"coordinates": ['
+    # j += get_coordinate_arrays
+    j + '}}'
+    # j + ']}}'
   end
 
   def get_coordinate_arrays
