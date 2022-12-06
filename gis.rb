@@ -48,17 +48,20 @@ class Track
     # # # Creates coordinate array 
     j +='"coordinates": ['
     # Loop through all the segment objects
-    @segments.each_with_index do |s, index|
-      if index > 0
-        j += ","
-      end
-      j += get_coordinate_string(s)
-    end
+    j += get_coordinate_arrays
+    # @segments.each_with_index do |s, index|
+    #   if index > 0
+    #     j += ","
+    #   end
+    #   j += get_coordinate_string(s)
+    # end
     j + ']}}'
   end
 
   def get_coordinate_arrays
-
+    segments
+    .map(&method(:get_coordinate_string))
+    .join(",")
   end
 
   # temporary solution to creating array of coordinates. 
