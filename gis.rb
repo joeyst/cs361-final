@@ -129,6 +129,8 @@ attr_reader :lat, :lon, :ele, :name, :type
 end
 
 class World
+  attr_reader :name, :features
+
 def initialize(name, things)
   @name = name
   @features = things
@@ -147,6 +149,10 @@ end
       s += f.get_json
     end
     s + "]}"
+  end
+
+  def _get_features
+
   end
 end
 
