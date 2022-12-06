@@ -50,8 +50,7 @@ class Track
       if index > 0
         j += ","
       end
-      tsj = get_coordinate_string(s)
-      j+=tsj
+      j += get_coordinate_string(s)
     end
     j + ']}}'
   end
