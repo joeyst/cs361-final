@@ -44,13 +44,8 @@ class Track
     j += '"geometry": {'
     j += '"type": "MultiLineString",'
 
-
-    # # # Creates coordinate array 
     j += %Q["coordinates": \[#{get_coordinate_arrays}\]]
-    # j +='"coordinates": ['
-    # j += get_coordinate_arrays
     j + '}}'
-    # j + ']}}'
   end
 
   def get_coordinate_arrays
