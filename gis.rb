@@ -21,6 +21,8 @@ class Coordinate
 end
 
 class Track
+  attr_reader :segments, :name
+  
   def initialize(segments, name=nil)
     @name = name
     segment_objects = []
@@ -53,6 +55,10 @@ class Track
       j += get_coordinate_string(s)
     end
     j + ']}}'
+  end
+
+  def get_coordinate_arrays
+
   end
 
   # temporary solution to creating array of coordinates. 
