@@ -11,11 +11,7 @@ class Coordinate
   # creates JSON appendable string, as temporary solution to 
   # JSON construction 
   def to_str
-    tsj = '['
-    tsj += "#{c.lon},#{c.lat}"
-    tsj += _ele
-    tsj += ']'
-    tsj
+    "[#{lon},#{lat},#{_ele}]"
   end
 
   def _ele
