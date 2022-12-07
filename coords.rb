@@ -1,4 +1,7 @@
 
+# Notice the lack of `require_relative`s! 
+# Dependency injection. 
+
 class Coords
   attr_reader :lon, :lat, :ele
 

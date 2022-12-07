@@ -1,7 +1,5 @@
 
-require_relative 'point.rb'
-
-class PointList
+class MultiLineString
   attr_reader :coords_list 
   
   def initialize(coords_list)

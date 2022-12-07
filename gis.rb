@@ -6,61 +6,6 @@ require_relative 'coords.rb'
 require_relative 'point.rb'
 require_relative 'point_list.rb'
 
-class Track
-  attr_reader :segments, :name
-  
-  def initialize(segments, name=nil)
-    @name = name
-    segment_objects = []
-    segments.each do |s|
-      segment_objects.append(TrackSegment.new(s))
-    end
-    # set segments to segment_objects
-    @segments = segment_objects
-  end
-
-  def get_json
-    j = '{'
-    j += '"type": "Feature", '
-    j += get_name_string
-    j += '"geometry": {'
-    j += '"type": "MultiLineString",'
-
-    j += %Q["coordinates": \[#{get_coordinate_arrays}\]]
-    j + '}}'
-  end
-
-  def get_name_string
-    name ? %Q["properties": {"title": "#{name}"},] : ""
-  end
-
-  def get_coordinate_arrays
-    segments
-    .map(&method(:get_coordinate_string))
-    .join(",")
-  end
-
-  # temporary solution to creating array of coordinates. 
-  # should later be extracted into segment class because 
-  # it's not the responsibility of `Track` to know how to 
-  # create `Coordinate`s from within the segment.coordinates.each loop 
-  def get_coordinate_string(s)
-    "[#{_get_coordinate_string_no_brackets(s)}]"
-  end
-
-  def _get_coordinate_string_no_brackets(s)
-    s.coordinates.join(",")
-  end
-end
-
-class TrackSegment
-  attr_reader :coordinates
-  
-  def initialize(coordinates)
-    @coordinates = coordinates
-  end
-end
-
 class Waypoint 
   attr_reader :object, :properties 
 
