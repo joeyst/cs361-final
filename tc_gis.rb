@@ -2,65 +2,45 @@ require_relative 'gis.rb'
 require 'json'
 require 'test/unit'
 
+require_relative 'coords.rb'
+require_relative 'point.rb'
+require_relative 'multi_line_string.rb'
+require_relative 'waypoint.rb'
+require_relative 'track.rb'
+
 class TestGis < Test::Unit::TestCase
 
-  def test_waypoints
-    w = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
+  def test_waypoint 
+    waypoint_coords = Coords.new(-121.5, 45.5, 30)
+    waypoint_properties = WaypointProperties.new("home", "flag")
+    waypoint = Waypoint.new(waypoint_coords, waypoint_properties)
     expected = JSON.parse('{"type": "Feature","properties": {"title": "home","icon": "flag"},"geometry": {"type": "Point","coordinates": [-121.5,45.5,30]}}')
-    result = JSON.parse(w.get_json)
-    assert_equal(result, expected)
-
-    w = Waypoint.new(-121.5, 45.5, nil, nil, "flag")
-    expected = JSON.parse('{"type": "Feature","properties": {"icon": "flag"},"geometry": {"type": "Point","coordinates": [-121.5,45.5]}}')
-    result = JSON.parse(w.get_json)
-    assert_equal(result, expected)
-
-    w = Waypoint.new(-121.5, 45.5, nil, "store", nil)
-    expected = JSON.parse('{"type": "Feature","properties": {"title": "store"},"geometry": {"type": "Point","coordinates": [-121.5,45.5]}}')
-    result = JSON.parse(w.get_json)
-    assert_equal(result, expected)
+    assert_equal(expected, JSON.parse(waypoint.get_json))
   end
 
   def test_tracks
-    ts1 = [
-      Point.new(-122, 45),
-      Point.new(-122, 46),
-      Point.new(-121, 46),
-    ]
+    multi_line_string1 = MultiLineString.new(
+      [Coords.new(-122, 45), Coords.new(-122, 46), Coords.new(-121, 46)]
+    )
 
-    ts2 = [ Point.new(-121, 45), Point.new(-121, 46), ]
+    multi_line_string2 = MultiLineString.new(
+      [Coords.new(-121, 45), Coords.new(-121, 46)]
+    )
 
-    ts3 = [
-      Point.new(-121, 45.5),
-      Point.new(-122, 45.5),
-    ]
+    track = Track.new([multi_line_string1, multi_line_string2], "track 1")
 
-    t = Track.new([ts1, ts2], "track 1")
     expected = JSON.parse('{"type": "Feature", "properties": {"title": "track 1"},"geometry": {"type": "MultiLineString","coordinates": [[[-122,45],[-122,46],[-121,46]],[[-121,45],[-121,46]]]}}')
-    result = JSON.parse(t.get_json)
-    assert_equal(expected, result)
-
-    t = Track.new([ts3], "track 2")
-    expected = JSON.parse('{"type": "Feature", "properties": {"title": "track 2"},"geometry": {"type": "MultiLineString","coordinates": [[[-121,45.5],[-122,45.5]]]}}')
     result = JSON.parse(t.get_json)
     assert_equal(expected, result)
   end
 
   def test_world
-    w = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
-    w2 = Waypoint.new(-121.5, 45.6, nil, "store", "dot")
-    ts1 = [
-      Point.new(-122, 45),
-      Point.new(-122, 46),
-      Point.new(-121, 46),
-    ]
+    waypoint1 = Waypoint.new(Coords.new(-121.5, 45.5, 30), WaypointProperties.new("home", "flag"))
+    waypoint2 = Waypoint.new(Coords.new(-121.5, 45.6), WaypointProperties.new("store", "dot"))
 
-    ts2 = [ Point.new(-121, 45), Point.new(-121, 46), ]
-
-    ts3 = [
-      Point.new(-121, 45.5),
-      Point.new(-122, 45.5),
-    ]
+    multilinestring1 = MultiLineString.new([Coords.new(-122, 45), Coords.new(-122, 46), Coords.new(-121, 46)])
+    multilinestring2 = MultiLineString.new([Coords.new(-121, 45), Coords.new(-121, 46)])
+    multilinestring3 = MultiLineString.new([Coords.new(-121, 45.5), Coords.new(-122, 45.5)])
 
     t = Track.new([ts1, ts2], "track 1")
     t2 = Track.new([ts3], "track 2")
