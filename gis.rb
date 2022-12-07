@@ -2,67 +2,9 @@
 
 require 'json'
 require 'set'
-
-class FeatureObject
-  def initialize(coords, **kwargs)
-    type = "Feature"
-    raise ""
-    coordinates = [lon, lat, kwargs['ele']].compact
-    properties = kwargs.reject {|k, v| Set.new(['lon', 'lat', 'ele']).include?(k)}
-  end
-end
-
-class Coords
-  attr_reader :lon, :lat, :ele
-
-  def initialize(lon, lat, ele=nil)
-    @lon = lon
-    @lat = lat
-    @ele = ele
-  end
-
-  def to_str
-    to_s
-  end
-
-  def to_s
-    JSON.generate([lon, lat, ele].compact)
-  end
-end
-
-class Point
-  attr_reader :coords
-
-  def initialize(coords)
-    @coords = coords
-  end
-
-  def to_str
-    JSON.generate(
-      "type": "Feature",
-      "coordinates": Coords.new(lon, lat, ele)
-    )
-  end
-end
-
-class PointList
-  attr_reader :coords_list 
-  
-  def initialize(coords_list)
-    @coords_list = coords_list
-  end
-
-  def to_str
-    to_s
-  end
-
-  def to_s
-    JSON.generate(
-      "type": "MultiLineString",
-      "coordinates": coords_list
-    )
-  end
-end
+require_relative 'coords.rb'
+require_relative 'point.rb'
+require_relative 'point_list.rb'
 
 class Track
   attr_reader :segments, :name
@@ -119,6 +61,11 @@ class TrackSegment
   end
 end
 
+class Waypoint 
+  attr_reader :object, :properties 
+
+  def initialize()
+
 class Waypoint
   attr_reader :lat, :lon, :ele, :name, :type
 
@@ -158,27 +105,17 @@ class Waypoint
 end
 
 class World
-  attr_reader :name, :features
+  attr_reader :features
 
-  def initialize(name, things)
-    @name = name
-    @features = things
+  def initialize(features)
+    @features = features
   end
 
-  def add_feature(f)
-    @features.append(t)
-  end
-
-  def get_json(indent=0)
-    %Q[{"type": "FeatureCollection","features": [#{_get_features}]}]
-  end
-
-  def _get_features
-    features
-      .map(&:get_json)
-      .join(",")
-  end
-end
+  def get_json
+    JSON.generate(
+      "type": "FeatureCollection", 
+      "features": features
+    )
 
 def main
   # `WayPoint.new` should take in a `Point` instance instead 
