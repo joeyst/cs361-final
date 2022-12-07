@@ -11,9 +11,9 @@ class MultiLineString
   end
 
   def to_s
-    JSON.generate(
-      "type": "MultiLineString",
-      "coordinates": coords_list
-    )
+    JSON.generate({
+      "type" => "MultiLineString",
+      "coordinates" => coords_list
+    })
   end
 end
