@@ -1,0 +1,15 @@
+class Coords 
+  vars => lat: Integer, lon: Integer, ele: Integer 
+  "[lat, lon, ele]"
+
+class Geometry
+  subclasses => Point, PointList
+
+class MultiLineString
+  type: "MultiLineString"
+  coordinates: Point[]
+
+class 
+
+class Waypoint
+  vars => point: Point, Properties

@@ -1,8 +1,18 @@
 #!/usr/bin/env ruby
 
 require 'json'
+require 'set'
 
-class Coordinate
+class FeatureObject
+  def initialize(coords, **kwargs)
+    type = "Feature"
+    raise ""
+    coordinates = [lon, lat, kwargs['ele']].compact
+    properties = kwargs.reject {|k, v| Set.new(['lon', 'lat', 'ele']).include?(k)}
+  end
+end
+
+class Coords
   attr_reader :lon, :lat, :ele
 
   def initialize(lon, lat, ele=nil)
@@ -11,10 +21,46 @@ class Coordinate
     @ele = ele
   end
 
-  # creates JSON appendable string, as temporary solution to 
-  # JSON construction 
   def to_str
+    to_s
+  end
+
+  def to_s
     JSON.generate([lon, lat, ele].compact)
+  end
+end
+
+class Point
+  attr_reader :coords
+
+  def initialize(coords)
+    @coords = coords
+  end
+
+  def to_str
+    JSON.generate(
+      "type": "Feature",
+      "coordinates": Coords.new(lon, lat, ele)
+    )
+  end
+end
+
+class PointList
+  attr_reader :coords_list 
+  
+  def initialize(coords_list)
+    @coords_list = coords_list
+  end
+
+  def to_str
+    to_s
+  end
+
+  def to_s
+    JSON.generate(
+      "type": "MultiLineString",
+      "coordinates": coords_list
+    )
   end
 end
 
@@ -135,19 +181,21 @@ class World
 end
 
 def main
+  # `WayPoint.new` should take in a `Point` instance instead 
+  # of passing in coordinates as they are. 
   w = Waypoint.new(-121.5, 45.5, 30, "home", "flag")
   w2 = Waypoint.new(-121.5, 45.6, nil, "store", "dot")
   ts1 = [
-  Coordinate.new(-122, 45),
-  Coordinate.new(-122, 46),
-  Coordinate.new(-121, 46),
+  Point.new(-122, 45),
+  Point.new(-122, 46),
+  Point.new(-121, 46),
   ]
 
-  ts2 = [ Coordinate.new(-121, 45), Coordinate.new(-121, 46), ]
+  ts2 = [ Point.new(-121, 45), Point.new(-121, 46), ]
 
   ts3 = [
-    Coordinate.new(-121, 45.5),
-    Coordinate.new(-122, 45.5),
+    Point.new(-121, 45.5),
+    Point.new(-122, 45.5),
   ]
 
   t = Track.new([ts1, ts2], "track 1")
